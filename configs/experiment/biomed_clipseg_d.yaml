@@ -30,7 +30,7 @@ trainer:
   gradient_clip_val: 0.5
   accelerator: gpu
   devices: [0]
-  precision: 16-mixed
+  precision: 16
 
 
 logger:

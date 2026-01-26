@@ -6,7 +6,7 @@ from typing import Literal
 """
 accelerator = "gpu"
 devices = [0]
-precision = "16-mixed"
+precision = "16"
 debugger = False
 models = ["clipseg", "cris", "biomed_clipseg", "biomed_clipseg_d"]
 freeze_encoder = False

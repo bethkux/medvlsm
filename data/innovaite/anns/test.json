@@ -1,0 +1,572 @@
+[
+  {
+    "bbox": [
+      177,
+      168,
+      811,
+      888
+    ],
+    "cat": 0,
+    "segment_id": "086d9e0662c545ed825cdf48",
+    "img_name": "t1278.tif",
+    "mask_name": "t1278.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      429,
+      227,
+      884,
+      824
+    ],
+    "cat": 0,
+    "segment_id": "1628ea89b8ae4bf398727809",
+    "img_name": "t0854.tif",
+    "mask_name": "t0854.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      928,
+      394,
+      959,
+      624
+    ],
+    "cat": 0,
+    "segment_id": "5b89c8f41bd6482a96f07422",
+    "img_name": "t0363.tif",
+    "mask_name": "t0363.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      223,
+      85,
+      871,
+      965
+    ],
+    "cat": 0,
+    "segment_id": "fc8c7b951846441f8dd518f0",
+    "img_name": "t1293.tif",
+    "mask_name": "t1293.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      287,
+      376,
+      368,
+      597
+    ],
+    "cat": 0,
+    "segment_id": "31b2fc59962b4c0db749802c",
+    "img_name": "t0902.tif",
+    "mask_name": "t0902.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      380,
+      488,
+      396,
+      505
+    ],
+    "cat": 0,
+    "segment_id": "d2e2f9fd878343ffbea89ceb",
+    "img_name": "t0086.tif",
+    "mask_name": "t0086.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      113,
+      120,
+      958,
+      934
+    ],
+    "cat": 0,
+    "segment_id": "89b7d31a2cc74b54b5f434ad",
+    "img_name": "t1347.tif",
+    "mask_name": "t1347.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      735,
+      743,
+      805,
+      791
+    ],
+    "cat": 0,
+    "segment_id": "58200935743c4870bacd3c2e",
+    "img_name": "t0007.tif",
+    "mask_name": "t0007.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      162,
+      239,
+      937,
+      971
+    ],
+    "cat": 0,
+    "segment_id": "61e1660c79cf4fa5805c33eb",
+    "img_name": "t1142.tif",
+    "mask_name": "t1142.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      67,
+      26,
+      1004,
+      659
+    ],
+    "cat": 0,
+    "segment_id": "416f44d3d83c474f80f9761f",
+    "img_name": "t1221.tif",
+    "mask_name": "t1221.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      735,
+      676,
+      898,
+      812
+    ],
+    "cat": 0,
+    "segment_id": "f3f09d339a7544d5bfc05d6b",
+    "img_name": "t0296.tif",
+    "mask_name": "t0296.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      365,
+      88,
+      977,
+      920
+    ],
+    "cat": 0,
+    "segment_id": "7c7db8ba05d9429f8df2a470",
+    "img_name": "t1020.tif",
+    "mask_name": "t1020.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      301,
+      389,
+      368,
+      570
+    ],
+    "cat": 0,
+    "segment_id": "e04d6f2153f642978bc44d58",
+    "img_name": "t0900.tif",
+    "mask_name": "t0900.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      897,
+      441,
+      955,
+      601
+    ],
+    "cat": 0,
+    "segment_id": "af23f485e0a9463f9c9b5c3d",
+    "img_name": "t0381.tif",
+    "mask_name": "t0381.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  },
+  {
+    "bbox": [
+      477,
+      194,
+      809,
+      350
+    ],
+    "cat": 0,
+    "segment_id": "f0208cd640724d998b881db5",
+    "img_name": "t0807.tif",
+    "mask_name": "t0807.tif",
+    "sentences": [
+      {
+        "idx": 0,
+        "sent_id": 0,
+        "sent": ""
+      }
+    ],
+    "prompts": {
+      "p0": "",
+      "p1": "object",
+      "p2": "segmentation object",
+      "p3": "target object in the image",
+      "p4": "small target object",
+      "p5": "one small target object",
+      "p6": "one small target object in the image",
+      "p7": [
+        "object to segment"
+      ],
+      "p8": [
+        "one object to segment"
+      ],
+      "p9": [
+        "one object to segment in the image"
+      ]
+    },
+    "sentences_num": 1
+  }
+]

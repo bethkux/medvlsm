@@ -10,25 +10,34 @@ from default_configs import *
 # For references, go the sibling python file "default_configs.py".
 
 # CUSTOM CONFIGS BLOCK -- start:
-# dataset_prompts = {
-#     "kvasir_polyp": non_rad_prompts,
-#     "bkai_polyp": non_rad_prompts, 
-#     "clinicdb_polyp": non_rad_prompts,
-#     "isic": non_rad_prompts,
-#     "dfu": non_rad_prompts,
-#     "camus": camus_prompts,
-#     "busi": busi_prompts,
-#     "chexlocalize": chexlocalze_prompts,
-#     "pooled_polyp": non_rad_prompts,
-#     "pooled_all": ["random"]
-# }
+dataset_prompts = {
+    "innovaite": non_rad_prompts
+#    "kvasir_polyp": non_rad_prompts,
+#    "bkai_polyp": non_rad_prompts, 
+#    "clinicdb_polyp": non_rad_prompts,
+#    "isic": non_rad_prompts,
+#    "dfu": non_rad_prompts,
+#    "camus": camus_prompts,
+#    "busi": busi_prompts,
+#    "chexlocalize": chexlocalze_prompts,
+#    "pooled_polyp": non_rad_prompts,
+#    "pooled_all": ["random"]
+}
 
-# models = [
-#     "clipseg",
-#     "cris",
-#     "biomed_clipseg",
-#     "biomed_clipseg_d"
-# ]
+models = [
+#    "clipseg",
+#    "cris",
+#    "biomed_clipseg",
+    "biomed_clipseg_d"
+]
+
+models_configs = {
+    "clipseg": {"batch_size": 32, "lr": 0.002},
+    "biomed_clipseg": {"batch_size": 32, "lr": 0.002},
+    "biomed_clipseg_d": {"batch_size": 32, "lr": 0.002},
+    "cris": {"batch_size": 32, "lr": 0.00002},
+}
+
 # freeze_encoder = True
 
 # CUSTOM CONFIGS BLOCK -- end:

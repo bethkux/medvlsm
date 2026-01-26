@@ -4,7 +4,7 @@ Created on Sat Feb  8 15:53:07 2025
 
 @author: Julia Dietlmeier <julia.dietlmeier@insight-centre.org>
 """
-#modified from https://github.com/naamiinepal/medvlsm/blob/main/src/models/biomedclipseg.py
+#https://github.com/naamiinepal/medvlsm/blob/main/src/models/biomedclipseg.py
 import torch
 import torch.nn as nn
 from typing import Optional
@@ -14,17 +14,19 @@ from transformers import CLIPSegConfig, CLIPSegForImageSegmentation
 import torchvision.transforms as transforms
 import math
 from torch.nn import functional as nnf
-
+from transformers.models.clipseg.modeling_clipseg import CLIPSegImageSegmentationOutput,CLIPSegTextEmbeddings
+from transformers import CLIPSegTextConfig
 
 resize_transform1 = transforms.Resize((224, 224))
-resize_transform2 = transforms.Resize((112, 112)) 
+resize_transform2 = transforms.Resize((112, 112))
 
-#https://github.com/changzy00/pytorch-attention/blob/master/attention_mechanisms/eca.py    
+#https://github.com/changzy00/pytorch-attention/blob/master/attention_mechanisms/eca.py      
 class ECALayer(nn.Module):
     def __init__(self, channels, gamma=2, b=1):
         super().__init__()
         
-        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))        
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        
         t = int(abs((math.log(channels, 2) + b) / gamma))
         k = t if t % 2 else t + 1
         self.conv = nn.Conv1d(1, 1, kernel_size=k, padding=(k - 1) // 2, bias=False)
@@ -32,7 +34,7 @@ class ECALayer(nn.Module):
 
     def forward(self, x):
         
-        y = self.avgpool(x)        
+        y = self.avgpool(x)
         y = self.conv(y.squeeze(-1).transpose(-1, -2)).transpose(-1, -2).unsqueeze(-1)
         y = self.sigmoid(y)
         return x * y.expand_as(x)
@@ -61,7 +63,7 @@ def get_cond_vec(self, conditional, batch_size):
         return cond   
 
 
-class BiomedCLIPSeg(nn.Module):
+class BiomedCLIPSeg(nn.Module): # ENSEMBLE Model
     r"""BiomedCLIP Encoder + CLIPSeg Decoder
 
     Args:
@@ -87,19 +89,28 @@ class BiomedCLIPSeg(nn.Module):
         
         # Encoder from BiomedCLIP
         self.biomedclip = open_clip.create_model(biomedclip_hf_api)
+        
+        text_config = CLIPSegTextConfig(max_position_embeddings=256)
+        
+        #self.clip_seg_config = CLIPSegConfig.from_pretrained(clipseg_hf_api)
+        self.clip_seg_config = CLIPSegConfig(**text_config.__dict__)
 
-        self.clip_seg_config = CLIPSegConfig.from_pretrained(clipseg_hf_api)
         self.dense_layer=nn.Linear(512,1568)
-
+        
         # Randomly initialize decoder
-        self.decoder = CLIPSegForImageSegmentation(self.clip_seg_config).decoder
+        self.decoder = CLIPSegForImageSegmentation(self.clip_seg_config).decoder#CNN_Decoder(n_class)
+        self.clip_seg = my_CLIPSeg(clipseg_hf_api, False, False)
+        
+        self.textembed = CLIPSegTextEmbeddings(CLIPSegTextConfig(max_position_embeddings=256))
+        
         self.decoder2 = UNet_D(n_class, nn.BatchNorm2d)
-                
+              
         reduce_dim=128
         
         self.film_mul = nn.Linear(512, reduce_dim)
         self.film_add = nn.Linear(512, reduce_dim)
-
+        self.reduce_input_ids = nn.Linear(256,77)
+        
         self.reduce = nn.Linear(768, reduce_dim)
         self.reduce2 = nn.Linear(197, 196)
 
@@ -210,6 +221,9 @@ class BiomedCLIPSeg(nn.Module):
         input_ids: torch.Tensor,
         attention_mask: torch.Tensor,
     ) -> torch.Tensor:
+        
+        
+        
         # step 1: forward the query images through the frozen CLIP vision encoder
         with torch.inference_mode():
             pooled_output, hidden_states = self._forward_vit(
@@ -228,34 +242,157 @@ class BiomedCLIPSeg(nn.Module):
             input_ids=input_ids,
             attention_mask=attention_mask,
         )
-
+        
         # step 3: forward both the pooled output and the activations through the lightweight decoder to predict masks
-        clipseg_decoder_outputs = self.decoder(activations, conditional_embeddings)        
-         
+        clipseg_decoder_outputs = self.decoder(activations, conditional_embeddings)
+        
 #------------------------------------------------------------------------------
 #-------DATA ADAPTER ----------------------------------------------------------
+
         a = activations[0]
         ar = self.reduce(a)
         csa=conditional_embeddings.unsqueeze(1)
         a = self.film_mul(csa) * ar + self.film_add(csa)
+
         ar = a.permute(0,2,1)
         size = int(math.sqrt(ar.shape[2]))
 
         a = self.reduce2(ar).view(pixel_values.shape[0], self.reduce2(ar).shape[1], size, size)
+
         at = self.trans_conv1(a)
+
         at = nnf.interpolate(at, (14,14), mode='bilinear', align_corners=True)
 
         at = nnf.interpolate(at, pixel_values.shape[2:], mode='bilinear', align_corners=True)
         clipseg_out=self.trans_conv1(a)
-        
-        at2=resize_transform2(clipseg_out)
-
-#------------------------------------------------------------------------------       
+       
         decoder_outputs_clipseg = clipseg_decoder_outputs
-        decoder_outputs = self.decoder2(pixel_values, a, clipseg_out, at2)
+        decoder_outputs = self.decoder2(pixel_values, a, clipseg_out, a)
         logits = decoder_outputs        
         
-        return self.convlast(torch.cat([decoder_outputs_clipseg.logits.unsqueeze(1),logits],dim=1))
+        ot=decoder_outputs_clipseg.logits.unsqueeze(1)
+        print('ot shape =',ot.shape )
+        ot=nnf.interpolate(ot, (224,224), mode='bilinear', align_corners=True)
+        biomedclipseg_out=self.convlast(torch.cat([ot,logits],dim=1))
+        
+        a, clipseg_out=self.clip_seg(pixel_values=pixel_values, input_ids=input_ids, attention_mask=attention_mask)
+        
+        out=self.convlast(torch.cat([biomedclipseg_out, clipseg_out],dim=1))
+        
+        return out
+
+
+class my_CLIPSeg(nn.Module):
+    r"""CLIPSeg Official implementation from HuggingFace.
+
+    Args:
+        clipseg_hf_api (str): HuggingFace api to import the CLIPSeg implementation; Eg:'CIDAS/clipseg-rd64-refined'
+        freeze_encoder (bool): Whether or not to freeze the encoders of pretrained CLIPSeg; Default is False.
+        freeze_decoder (bool): Whether or not to freeze the decoder of pretrained CLIPSeg; Default is False.
+    """
+    def __init__(
+        self,
+        clipseg_hf_api: str = 'CIDAS/clipseg-rd64-refined',
+        freeze_encoder: bool = False,
+        freeze_decoder: bool = False,
+        maxtext=256,
+    ) -> None:
+        super().__init__()
+
+        self.clipseg = CLIPSegForImageSegmentation.from_pretrained(clipseg_hf_api,
+                                                                   output_attentions= True,
+                                                                   output_hidden_states= True)
+
+        self.clipseg.clip.requires_grad_(not freeze_encoder)
+        self.clipseg.decoder.requires_grad_(not freeze_decoder)
+        self.clipseg.output = CLIPSegImageSegmentationOutput
+        
+        tp_kernels = (16 // 4, 16 // 4)
+        reduce_dim=128
+        n_heads=4
+        self.extract_layers = (3,6,9)
+        depth = len((3,6,9))
+         
+        self.film_mul = nn.Linear(512, reduce_dim)
+        self.film_add = nn.Linear(512, reduce_dim)
+
+        self.reduce = nn.Linear(768, reduce_dim)
+        self.reduce2 = nn.Linear(197, 196)
+        
+        self.trans_conv = nn.ConvTranspose2d(reduce_dim, 1, 16, stride=16)
+        
+        self.trans_conv1 = nn.Sequential(
+                nn.Conv2d(reduce_dim, reduce_dim, kernel_size=3, padding=1),
+                nn.ReLU(),
+                nn.ConvTranspose2d(reduce_dim, reduce_dim // 2, kernel_size=tp_kernels[0], stride=tp_kernels[0]),
+                nn.ReLU(),
+                nn.ConvTranspose2d(reduce_dim // 2, 1, kernel_size=tp_kernels[1], stride=tp_kernels[1]),               
+            )
+        
+        self.upsample_proj = nn.Conv2d(reduce_dim, 1, kernel_size=1)
+        self.convlast=nn.Conv2d(2,1,1)
+        self.decoder2 = UNet_D(1, nn.BatchNorm2d)
+        
+        self.blocks = nn.ModuleList([nn.TransformerEncoderLayer(d_model=reduce_dim, nhead=n_heads) for _ in range(len(self.extract_layers))])
+        self.reduces = nn.ModuleList([nn.Linear(768, reduce_dim) for _ in range(depth)])
+        
+    def forward(
+        self, 
+        input_ids:torch.Tensor, 
+        pixel_values:torch.Tensor, 
+        attention_mask: Optional[torch.Tensor] = None,
+        **kwargs
+    ) -> torch.Tensor:
+        r"""
+        Args:
+            pixel_values: Normalized image tensor.
+            input_ids: Tokenized text input.
+            attention_mask: Mask for token inputs, used in the attention layers.
+
+        Returns: Tensor with segmentation logits
+        """
+        
+        B, C, H, W = pixel_values.shape
+        
+        outputs_2 = self.clipseg.output(self.clipseg(input_ids=input_ids,pixel_values=pixel_values,attention_mask=attention_mask))
+
+#------------------------------------------------------------------------------
+#-------DATA ADAPTER ----------------------------------------------------------
+        
+        conditional_embeddings=outputs_2[1]
+
+        vision_model_output=outputs_2[3]
+        
+        act0=vision_model_output[0]
+        act1=vision_model_output[1]
+        attention_mask=act1
+
+        decoder_output=outputs_2[4]
+        
+        csa=conditional_embeddings.unsqueeze(1)
+
+        a = None
+        _activations=act0
+        for i, (activation, block, reduce) in enumerate(zip(_activations, self.blocks, self.reduces)):
+            
+            if a is not None:
+                a = reduce(activation) + a
+            else:
+                a = reduce(activation)
+                a = self.film_mul(csa) * a + self.film_add(csa)
+
+            a = block(a)
+
+        ar = a.permute(0,2,1)
+
+        size = int(math.sqrt(ar.shape[2]))
+        
+        a = self.reduce2(ar).view(pixel_values.shape[0], self.reduce2(ar).shape[1], size, size)
+        
+        decoder_outputs = self.decoder2(pixel_values, a, decoder_output[0].unsqueeze(1), a)
+
+        return a, self.convlast(torch.cat([decoder_output[0].unsqueeze(1),decoder_outputs],dim=1))
+
 
 class UNet_D(nn.Module):
     def __init__(self, num_classes, BatchNorm):
@@ -266,6 +403,7 @@ class UNet_D(nn.Module):
         
         self.conv11 = nn.Conv2d(3, 64, 3, padding=1, bias=True)
         self.conv12 = nn.Conv2d(64, 64, 3, padding=1, bias=True)
+        self.gn1 = nn.GroupNorm(4,64)
         self.bn1 = BatchNorm(64)
         self.maxpool = nn.MaxPool2d(2)
         
@@ -281,7 +419,7 @@ class UNet_D(nn.Module):
         self.conv444 = nn.Conv2d(512, 512, 3, padding=1,bias=True)
         self.bn4 = BatchNorm(512)
         
-        self.upconv41 = nn.Conv2d(640,1240,1)
+        self.upconv41 = nn.Conv2d(768,1240,1)
         self.upconv4 = nn.ConvTranspose2d(1240, 546, kernel_size=2, stride=2)
         self.convup4 = nn.Conv2d(546, 546, 3, padding=1,bias=True)
         self.upbn4 = BatchNorm(546)
@@ -302,10 +440,11 @@ class UNet_D(nn.Module):
         self.outconv2 = nn.Conv2d(2, num_classes, kernel_size=1)
         
         self.eca4 = ECALayer(1240)
+        self.eca3 = ECALayer(802)
         
         self.Dropout = nn.Dropout(0.1)
-        
-    def forward(self, x, low_level_feat, at, at2):
+
+    def forward(self, x, low_level_feat, at, a_my_CLIPseg):
         
         x1 = self.Dropout(self.relu(self.bn1(self.conv12(self.conv11(x)))))
         x1 = self.maxpool(x1)
@@ -319,38 +458,17 @@ class UNet_D(nn.Module):
         x4 = self.Dropout(self.relu(self.bn4(self.conv444(self.conv44(x3)))))
         x4 = self.maxpool(x4)
 
-        xd4=self.relu(self.upbn4(self.convup4(self.convup4(self.upconv4((self.eca4(self.upconv41( torch.cat([low_level_feat,x4],dim=1) ))))))))
+        xd4=self.relu(self.upbn4(self.convup4(self.convup4(self.upconv4((self.eca4(self.upconv41( torch.cat([low_level_feat, x4, a_my_CLIPseg],dim=1) ))))))))
+
         xd4 = torch.cat([xd4, x3], dim=1)
         
         xd3=self.relu(self.upbn3(self.convup3(self.convup3((self.upconv3(xd4))))))
         xd3 = torch.cat([xd3, x2], dim=1)
         
-        xd2=self.relu(self.upbn2(self.convup2(self.convup2(self.upconv2( xd3 )))))#112,112
+        xd2=self.relu(self.upbn2(self.convup2(self.convup2(self.upconv2( xd3 )))))
         xd2 = torch.cat([xd2, x1], dim=1)
         
-        xd1=self.relu(self.upbn1(self.convup1(self.convup1(self.upconv1( xd2  )))))#224,224       
+        xd1=self.relu(self.upbn1(self.convup1(self.convup1(self.upconv1( xd2  )))))       
         
-        return self.outconv2(torch.cat([at, self.outconv(xd1)],dim=1))    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-        
+        return self.outconv2(torch.cat([at, self.outconv(xd1)],dim=1))
+    
