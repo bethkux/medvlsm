@@ -11,17 +11,8 @@ from default_configs import *
 
 # CUSTOM CONFIGS BLOCK -- start:
 dataset_prompts = {
-    "innovaite": non_rad_prompts
-#    "kvasir_polyp": non_rad_prompts,
-#    "bkai_polyp": non_rad_prompts, 
-#    "clinicdb_polyp": non_rad_prompts,
-#    "isic": non_rad_prompts,
-#    "dfu": non_rad_prompts,
-#    "camus": camus_prompts,
-#    "busi": busi_prompts,
-#    "chexlocalize": chexlocalze_prompts,
-#    "pooled_polyp": non_rad_prompts,
-#    "pooled_all": ["random"]
+    "innovaite": non_rad_prompts,
+#    "bf-c2dl-hsc_qa": non_rad_prompts,
 }
 
 models = [
