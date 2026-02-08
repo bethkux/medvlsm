@@ -1,0 +1,45 @@
+# Datamodule configuration for the BF-C2DL-HSC QA crops dataset
+# Uses ImageTextMaskDataset (image + caption + mask)
+
+_target_: src.datamodules.BaseDataModule
+
+train_dataset:
+  _target_: src.datamodules.datasets.ImageTextMaskDataset
+  tokenizer_type: ${tokenizer_type}
+  prompt_type: ${prompt_type}
+  images_dir: ${data_root}/bf-c2dl-hsc_qa/images
+  masks_dir: ${data_root}/bf-c2dl-hsc_qa/masks
+  caps_file: ${data_root}/bf-c2dl-hsc_qa/anns/train.json
+  img_size: ${img_size}
+  context_length: ${context_length}
+  img_transforms: ${train_img_transforms}
+  mask_transforms: ${train_mask_transforms}
+
+val_dataset:
+  _target_: src.datamodules.datasets.ImageTextMaskDataset
+  tokenizer_type: ${tokenizer_type}
+  prompt_type: ${prompt_type}
+  images_dir: ${data_root}/bf-c2dl-hsc_qa/images
+  masks_dir: ${data_root}/bf-c2dl-hsc_qa/masks
+  caps_file: ${data_root}/bf-c2dl-hsc_qa/anns/val.json
+  img_size: ${img_size}
+  context_length: ${context_length}
+  img_transforms: ${val_img_transforms}
+  mask_transforms: ${val_mask_transforms}
+
+test_dataset:
+  _target_: src.datamodules.datasets.ImageTextMaskDataset
+  tokenizer_type: ${tokenizer_type}
+  prompt_type: ${prompt_type}
+  images_dir: ${data_root}/bf-c2dl-hsc_qa/images
+  masks_dir: ${data_root}/bf-c2dl-hsc_qa/masks
+  caps_file: ${data_root}/bf-c2dl-hsc_qa/anns/test.json
+  img_size: ${img_size}
+  context_length: ${context_length}
+  img_transforms: ${test_img_transforms}
+  mask_transforms: ${test_mask_transforms}
+
+batch_size: 16
+num_workers: 4
+pin_memory: True
+
