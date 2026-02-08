@@ -16,8 +16,8 @@
 
 
 # Steps for adding a new dataset XYZ
-1. Create new folders `data/XYZ/anns`, `data/XYZ/img` and `data/XYZ/masks`
-2. Put images into `data/XYZ/img` and masks into `data/XYZ/masks` (need to have matching names)
+1. Create new folders `data/XYZ/anns`, `data/XYZ/images` and `data/XYZ/masks`
+2. Put images into `data/XYZ/images` and masks into `data/XYZ/masks` (need to have matching names)
 3. Create under `data/innovaite/anns/` three json files: `test.json`, `train.json` and `val.json`
 4. Create new yaml file `configs/datamodule/img_txt_mask/XYZ.yaml`
 5. Add the new dataset prompt into `scripts/finetune.py`
