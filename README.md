@@ -1,3 +1,28 @@
+# Changes to the project with an explanation
+
+## Models
+- ```src/models/biomedclipseg-org.py``` - original version of Biomed CLIP Seg
+- ```src/models/clipseg-org.py``` - original version of CLIP Seg
+- ```src/models/biomedclipseg.py``` - new version of Biomed CLIP Seg from [VLSM-Ensamble](https://github.com/juliadietlmeier/VLSM-Ensemble?tab=readme-ov-file), formerly known as BiomedCLIPSeg_A
+- ```src/models/biomedclipseg2.py``` - new version of Biomed CLIP Seg from [VLSM-Ensamble](https://github.com/juliadietlmeier/VLSM-Ensemble?tab=readme-ov-file), formerly known as Ensemble-C
+- ```src/models/clipseg.py``` - new version of CLIP Seg from [VLSM-Ensamble](https://github.com/juliadietlmeier/VLSM-Ensemble?tab=readme-ov-file), formerly known as CLIPSeg-B
+
+## Precision
+- `configs/experiment/biomed_clipseg.yaml, biomed_clipseg_d.yaml, clipseg.yaml` - precision changed 16-mixed to 16 (previously incompatable with some of the requirements)
+- `scripts/default_configs.py` - precision changed 16-mixed to 16 (previously incompatable with some of the requirements)
+
+## Parameter config
+- `scripts/finetune.py` - set which datasets and models are used
+
+
+# Steps for adding a new dataset XYZ
+1. Create new folders `data/XYZ/anns`, `data/XYZ/img` and `data/XYZ/masks`
+2. Put images into `data/XYZ/img` and masks into `data/XYZ/masks` (need to have matching names)
+3. Create under `data/innovaite/anns/` three json files: `test.json`, `train.json` and `val.json`
+4. Create new yaml file `configs/datamodule/img_txt_mask/XYZ.yaml`
+5. Add the new dataset prompt into `scripts/finetune.py`
+
+
 # Exploring Transfer Learning in Medical Image Segmentation using Vision-Language Models
 
 [*Accepted at MIDL 2024*](https://openreview.net/forum?id=sN3sDKkGeN)
