@@ -1,0 +1,8 @@
+[core]
+    remote = hpc_storage
+[cache]
+    dir = .dvc/cache
+    shared = group
+    type = "reflink,copy"
+['remote "hpc_storage"']
+    url = /mnt/proj1/eu-25-40/innovaite/dvc_store
