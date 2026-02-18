@@ -7,7 +7,7 @@ from pathlib import Path
 # -----------------------------
 # CONFIGURATION
 # -----------------------------
-DATA_ROOT = "/mnt/proj1/eu-25-40/innovaite/VLSM-Ensemble_Execution/medvlsm/data/innovaite"
+DATA_ROOT = "/mnt/proj1/eu-25-40/innovaite/VLSM-Ensemble_Execution/medvlsm/data/bf-c2dl-hsc_qa"
 IMAGES_DIR = f"{DATA_ROOT}/images"
 MASKS_DIR = f"{DATA_ROOT}/masks"
 ANNS_DIR = f"{DATA_ROOT}/anns"
@@ -19,34 +19,68 @@ TEST_SPLIT = 0.15
 # Prompts template (modify or add more)
 PROMPTS_TEMPLATE = {
     "p0": "",
-    "p1": "polyp",
-    "p2": "circle polyp",
-    "p3": "pink circle polyp",
-    "p4": "small pink circle polyp",
-    "p5": "one small pink circle polyp",
-    "p6": "one small pink circle polyp, located in right of the image",
+    "p1": "cell",
+    "p2": "stem cell",
+    "p3": "mouse stem cell",
+    "p4": "oval mouse stem cell",
+    "p5": "one oval mouse stem cell",
+    "p6": "one oval mouse stem cell, located in center of the image",
     "p7": [
-        "polyp which is a projecting growth of tissue",
-        "polyp which is often a bumpy flesh in rectum",
-        "polyp which is a small lump in the lining of colon",
-        "polyp which is a tissue growth that often resemble mushroom like stalks",
-        "polyp which is an abnormal growth of tissues projecting from a mucous membrane"
+        "cell which is floating inside engineered hydrogel microwell",
+        "cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio",
+        "cell which is mouse hematopoietic stem cell",
+        "cell which is stem cell that can give rise to all blood cell types",
+        "cell which can be found in bone marrow"
     ],
     "p8": [
-        "one small pink circle polyp which is a projecting growth of tissue",
-        "one small pink circle polyp which is often a bumpy flesh in rectum",
-        "one small pink circle polyp which is a small lump in the lining of colon",
-        "one small pink circle polyp which is a tissue growth that often resemble mushroom like stalks",
-        "one small pink circle polyp which is an abnormal growth of tissues projecting from a mucous membrane"
+        "one oval mouse cell which is floating inside engineered hydrogel microwell",
+        "one oval mouse cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio",
+        "one oval mouse cell which is mouse hematopoietic stem cell",
+        "one oval mouse cell which is stem cell that can give rise to all blood cell types",
+        "one oval mouse cell which can be found in bone marrow"
     ],
     "p9": [
-        "one small pink circle polyp which is a projecting growth of tissue located in right of the image",
-        "one small pink circle polyp which is often a bumpy flesh in rectum located in right of the image",
-        "one small pink circle polyp which is a small lump in the lining of colon located in right of the image",
-        "one small pink circle polyp which is a tissue growth that often resemble mushroom like stalks located in right of the image",
-        "one small pink circle polyp which is an abnormal growth of tissues projecting from a mucous membrane located in right of the image"
+        "one oval mouse cell which is floating inside engineered hydrogel microwell located in center of the image",
+        "one oval mouse cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio located in center of the image",
+        "one oval mouse cell which is mouse hematopoietic stem cell located in center of the image",
+        "one oval mouse cell which is stem cell that can give rise to all blood cell types located in center of the image",
+        "one oval mouse cell which can be found in bone marrow located in center of the image"
     ]
 }
+
+# -----------------------------
+# ORIGINAL PROMPTS TEMPLATE
+# ------------------------------
+# PROMPTS_TEMPLATE = {
+#     "p0": "",
+#     "p1": "polyp",
+#     "p2": "circle polyp",
+#     "p3": "pink circle polyp",
+#     "p4": "small pink circle polyp",
+#     "p5": "one small pink circle polyp",
+#     "p6": "one small pink circle polyp, located in right of the image",
+#     "p7": [
+#         "polyp which is a projecting growth of tissue",
+#         "polyp which is often a bumpy flesh in rectum",
+#         "polyp which is a small lump in the lining of colon",
+#         "polyp which is a tissue growth that often resemble mushroom like stalks",
+#         "polyp which is an abnormal growth of tissues projecting from a mucous membrane"
+#     ],
+#     "p8": [
+#         "one small pink circle polyp which is a projecting growth of tissue",
+#         "one small pink circle polyp which is often a bumpy flesh in rectum",
+#         "one small pink circle polyp which is a small lump in the lining of colon",
+#         "one small pink circle polyp which is a tissue growth that often resemble mushroom like stalks",
+#         "one small pink circle polyp which is an abnormal growth of tissues projecting from a mucous membrane"
+#     ],
+#     "p9": [
+#         "one small pink circle polyp which is a projecting growth of tissue located in right of the image",
+#         "one small pink circle polyp which is often a bumpy flesh in rectum located in right of the image",
+#         "one small pink circle polyp which is a small lump in the lining of colon located in right of the image",
+#         "one small pink circle polyp which is a tissue growth that often resemble mushroom like stalks located in right of the image",
+#         "one small pink circle polyp which is an abnormal growth of tissues projecting from a mucous membrane located in right of the image"
+#     ]
+# }
 
 # -----------------------------
 # MAIN
@@ -122,4 +156,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
