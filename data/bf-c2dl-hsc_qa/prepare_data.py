@@ -7,7 +7,7 @@ from PIL import Image
 # -----------------------------
 PARQUET_PATH = '../qa_crops/BF-C2DL-HSC/mixed_sz64/qa_dataset.parquet'
 # DEST_ROOT = "/mnt/proj1/eu-25-40/innovaite/VLSM-Ensemble_Execution/medvlsm/data/innovaite"
-DEST_ROOT = "/home/osalamon/OPENsalam/WP3/VLSM-ensemble/VLSM-Ensemble/beth/data/bf-c2dl-hsc_qa"
+DEST_ROOT = "."
 
 # Destination directories
 IMAGES_DIR = os.path.join(DEST_ROOT, "images")

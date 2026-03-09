@@ -14,31 +14,38 @@ ANNS_DIR = f"{DATA_ROOT}/anns"
 TRAIN_SPLIT = 0.70
 VAL_SPLIT = 0.15
 TEST_SPLIT = 0.15
-
-# Prompt definitions for BF-C2DL-HSC (mouse stem cells)
+# Prompts template (modify or add more)
 PROMPTS_TEMPLATE = {
     "p0": "",
-    "p1": "mouse stem cell",
-    "p2": "hematopoietic stem cell",
-    "p3": "stem cell in bright-field microscopy",
-    "p4": "single mouse stem cell",
-    "p5": "one stem cell",
-    "p6": "one mouse hematopoietic stem cell",
+    "p1": "cell",
+    "p2": "stem cell",
+    "p3": "mouse stem cell",
+    "p4": "oval mouse stem cell",
+    "p5": "one oval mouse stem cell",
+    "p6": "one oval mouse stem cell, located in center of the image",
     "p7": [
-        "mouse stem cell",
-        "hematopoietic stem cell in bright-field microscopy",
-        "stem cell from BF-C2DL-HSC dataset"
+        "cell which is floating inside engineered hydrogel microwell",
+        "cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio",
+        "cell which is mouse hematopoietic stem cell",
+        "cell which is stem cell that can give rise to all blood cell types",
+        "cell which can be found in bone marrow"
     ],
     "p8": [
-        "single mouse stem cell",
-        "one hematopoietic stem cell",
-        "one stem cell in bright-field microscopy"
+        "one oval mouse cell which is floating inside engineered hydrogel microwell",
+        "one oval mouse cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio",
+        "one oval mouse cell which is mouse hematopoietic stem cell",
+        "one oval mouse cell which is stem cell that can give rise to all blood cell types",
+        "one oval mouse cell which can be found in bone marrow"
     ],
     "p9": [
-        "single mouse stem cell in a microscopy image",
-        "one hematopoietic stem cell from BF-C2DL-HSC"
+        "one oval mouse cell which is floating inside engineered hydrogel microwell located in center of the image",
+        "one oval mouse cell which is round, non-adherent, with a rounded nucleus and low cytoplasm-to-nucleus ratio located in center of the image",
+        "one oval mouse cell which is mouse hematopoietic stem cell located in center of the image",
+        "one oval mouse cell which is stem cell that can give rise to all blood cell types located in center of the image",
+        "one oval mouse cell which can be found in bone marrow located in center of the image"
     ]
 }
+
 
 # -----------------------------
 # MAIN

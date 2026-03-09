@@ -11,8 +11,9 @@ from default_configs import *
 
 # CUSTOM CONFIGS BLOCK -- start:
 dataset_prompts = {
-    "innovaite": non_rad_prompts,
-#    "bf-c2dl-hsc_qa": non_rad_prompts,
+    "kvasir_polyp": non_rad_prompts,
+    #"innovaite": non_rad_prompts,
+    #"bf-c2dl-hsc_qa": non_rad_prompts,
 }
 
 models = [
